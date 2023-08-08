@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net/http"
-	"strings"
+	"fmt"
+	"gohub/bootstrap"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,30 +12,15 @@ func main() {
 	r := gin.New() //* gin.Engine
 
 	// register middleware
-	r.Use(gin.Logger(), gin.Recovery())
+	// r.Use(gin.Logger(), gin.Recovery())
+	//程序初始化，初始化路由绑定
+	bootstrap.SetupRoute(r)
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"code":    1,
-			"message": "sucess",
-		})
-	})
+	err := r.Run(":8848")
+	if err != nil {
+		//错误处理，端口被占用了或者其他错误
 
-	// 处理404请求
-	r.NoRoute(func(cx *gin.Context) {
-		// 获取标头信息的 Accept信息
-		head_Accept := cx.Request.Header.Get("Accept")
-		if strings.Contains(head_Accept, "text/html") {
-			//如果是 HTML 的话
-			cx.String(http.StatusNotFound, "404")
-		} else {
-			cx.JSON(http.StatusNotFound, gin.H{
-				"error_code":    404,
-				"error_message": "路由未定义，请确认 url 和请求方法是否正确。",
-			})
-		}
-	})
-
-	r.Run(":8848")
+		fmt.Println(err.Error())
+	}
 	// r.Run() 默认端口为8080
 }
