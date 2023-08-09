@@ -24,10 +24,11 @@ func SetupRoute(router *gin.Engine) {
 
 // 注册全局中间件
 func registerGlobalMiddleWare(router *gin.Engine) {
-	router.Use(
+	router.Use( //func(*Context)
 		// gin.Logger(),
 		middlewares.Logger(),
-		gin.Recovery(),
+		// gin.Recovery(),
+		middlewares.Recovery(),
 	)
 
 }
