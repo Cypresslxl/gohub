@@ -24,9 +24,9 @@ func SetupRoute(router *gin.Engine) {
 
 // 注册全局中间件
 func registerGlobalMiddleWare(router *gin.Engine) {
-	router.Use( //func(*Context)
+	router.Use(
 		// gin.Logger(),
-		middlewares.Logger(),
+		middlewares.Logger(), //函数的返回值是 ： gin.HandlerFunc ， 也就是func(*Context)，这个类型的函数就是middleware
 		// gin.Recovery(),
 		middlewares.Recovery(),
 	)
