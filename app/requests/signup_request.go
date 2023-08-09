@@ -3,6 +3,8 @@
 package requests
 
 import (
+	// "gohub/app/requests"
+
 	"github.com/gin-gonic/gin"
 	"github.com/thedevsaddam/govalidator"
 )
@@ -26,16 +28,17 @@ func ValidateSignupPhoneExist(data interface{}, c *gin.Context) map[string][]str
 		},
 	}
 
-	// 配置初始化
-	opts := govalidator.Options{
-		Data:          data,
-		Rules:         rules,
-		TagIdentifier: "valid", // 模型中的 Struct 标签标识符
-		Messages:      messages,
-	}
+	// // 配置初始化
+	// opts := govalidator.Options{
+	// 	Data:          data,
+	// 	Rules:         rules,
+	// 	TagIdentifier: "valid", // 模型中的 Struct 标签标识符
+	// 	Messages:      messages,
+	// }
 
-	// 开始验证
-	return govalidator.New(opts).ValidateStruct()
+	// // 开始验证
+	// return govalidator.New(opts).ValidateStruct()
+	return validate(data, rules, messages)
 }
 
 // 用于验证Email的struct
@@ -61,14 +64,16 @@ func ValidateSignupEmailExist(data interface{}, c *gin.Context) map[string][]str
 	}
 
 	// 配置初始化
-	opts := govalidator.Options{
-		Data:          data,
-		Rules:         rules,
-		TagIdentifier: "valid", // 模型中的 Struct 标签标识符
-		Messages:      messages,
-	}
+	// opts := govalidator.Options{
+	// 	Data:          data,
+	// 	Rules:         rules,
+	// 	TagIdentifier: "valid", // 模型中的 Struct 标签标识符
+	// 	Messages:      messages,
+	// }
 
-	// 开始验证
-	return govalidator.New(opts).ValidateStruct() //他会返回任何和
+	// // 开始验证
+	// return govalidator.New(opts).ValidateStruct() //他会返回任何和
 	// The function returns a map where the keys are field names, and the values are arrays of error messages for each field that fails validation.
+
+	return validate(data, rules, messages)
 }
