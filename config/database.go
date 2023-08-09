@@ -12,8 +12,8 @@ func init() {
 
 			"mysql": map[string]interface{}{
 				// 数据库连接信息
-				"host":     config.Env("DB_HOST", "127.0.0.1"),
-				"port":     config.Env("DB_PORT", "3306"),
+				"host":     config.Env("DB_HOST", "127.0.0.1"), //database.mysql.host
+				"port":     config.Env("DB_PORT", "3306"),      //database.mysql.port
 				"database": config.Env("DB_DATABASE", "gohub"),
 				"username": config.Env("DB_USERNAME", ""),
 				"password": config.Env("DB_PASSWORD", ""),
