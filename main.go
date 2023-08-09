@@ -37,6 +37,8 @@ func main() {
 	bootstrap.SetupRedis()
 	// 初始化路由绑定
 	bootstrap.SetupRoute(router)
+	// logger.Dump(captcha.NewCaptcha().VerifyCaptcha("9hZ0bCaMBdc0oCAFj0fy", "242703"), "正确的答案")
+	// logger.Dump(captcha.NewCaptcha().VerifyCaptcha("4EAztsuaTDrotxaUjoEg", "000000"), "错误的答案")
 
 	//test
 	// fmt.Println("name  : %s", config.GetString("app.name"))

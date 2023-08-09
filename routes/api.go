@@ -19,6 +19,10 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			authGroup.POST("/signup/phone/exist", obj.IsPhoneExist)
 			// 判断email是否已经注册
 			authGroup.POST("signup/email/exist", obj.IsEmailExist)
+			// 发送验证码
+			capt := new(auth.VerifyCodeController)
+			// 图片验证码，需要加限流
+			authGroup.POST("/verify-codes/captcha", capt.ShowCaptcha)
 		}
 		// v1.GET("/", func(c *gin.Context) {
 		// JSON 格式相应
