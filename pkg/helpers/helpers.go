@@ -4,6 +4,7 @@ package helpers
 import "reflect"
 
 // Empty 类似于 PHP 的 empty() 函数
+// 用于判断各种数据类型变量val 是否为空
 func Empty(val interface{}) bool {
 	if val == nil {
 		return true
