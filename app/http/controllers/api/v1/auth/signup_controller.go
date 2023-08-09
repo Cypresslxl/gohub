@@ -17,11 +17,14 @@ type SignupController struct {
 
 // IsPhoneExist 检测手机号是否被注册
 func (is *SignupController) IsPhoneExist(cx *gin.Context) {
-	// request := PhoneExistRequest{}
+	// 初始化请求对象
 	request := requests.SignupPhoneExistRequest{}
 
+	// validate 判断数据格式是否合法
 	// cx代表的是http请求，request代表的是处理后的数据，第三个参数代表的是处理函数handler
-	requests.Validate(cx, &request, requests.ValidateSignupPhoneExist)
+	if ok := requests.Validate(cx, &request, requests.ValidateSignupPhoneExist); !ok {
+		return
+	}
 
 	//  检查数据库并返回响应
 	cx.JSON(http.StatusOK, gin.H{
