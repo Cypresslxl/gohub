@@ -43,18 +43,15 @@ func VerifyCodePhone(data interface{}, c *gin.Context) map[string][]string {
 		},
 	}
 
-	errs := validate(data, rules, messages)
+	errs := validate(data, rules, messages) //validate 是真正调用第三方库API
 
 	// the provided code snippet data := data.(*VerifyCodePhoneRequest) is a type assertion in Go. It's used for type conversion or type assertion,
 	// allowing you to access the underlying value of an interface when you know its concrete type.
 	// The code data := data.(*VerifyCodePhoneRequest) is a way to convert the variable data from an interface type to the concrete type VerifyCodePhoneRequest.
 	//  This allows you to access the fields and methods specific to the VerifyCodePhoneRequest type on the data variable.
 	// 图片验证码
-	_data := data.(*VerifyCodePhoneRequest)
-	errs = validators.ValidateCaptcha(_data.CaptchaID, _data.CaptchaAnswer, errs)
-	// if ok := captcha.NewCaptcha().VerifyCaptcha(_data.CaptchaID, _data.CaptchaAnswer); !ok {
-	// errs["captcha_answer"] = append(errs["captcha_answer"], "图片验证码错误")
-	// }
+	_data := data.(*VerifyCodePhoneRequest)                                       //assertion and convertion
+	errs = validators.ValidateCaptcha(_data.CaptchaID, _data.CaptchaAnswer, errs) //比对验证码
 
 	return errs
 }

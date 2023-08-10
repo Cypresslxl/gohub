@@ -17,7 +17,7 @@ func init() {
 			// 本地开发环境验证码使用 debug_code
 			"debug_code": 123456,
 
-			// 方便本地和 API 自动测试
+			// 方便本地和 API 自动测试,有这里的prefix或者suffix则会跳过检测
 			"debug_phone_prefix": "000",
 			"debug_email_suffix": "@testing.com",
 		}

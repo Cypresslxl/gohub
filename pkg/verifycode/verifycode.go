@@ -41,7 +41,7 @@ func NewVerifyCode() *VerifyCode {
 //	verifycode.NewVerifyCode().SendSMS(request.Phone)
 func (vc *VerifyCode) SendSMS(phone string) bool {
 
-	// 生成验证码
+	// 生成验证码同时存储在redis中
 	code := vc.generateVerifyCode(phone)
 
 	// 方便本地和 API 自动测试
@@ -61,7 +61,7 @@ func (vc *VerifyCode) SendSMS(phone string) bool {
 //	verifycode.NewVerifyCode().SendEmail(request.Email)
 func (vc *VerifyCode) SendEmail(email string) error {
 
-	// 生成验证码
+	// 生成验证码同时存储在redis中
 	code := vc.generateVerifyCode(email)
 
 	// 方便本地和 API 自动测试

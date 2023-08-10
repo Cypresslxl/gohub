@@ -45,7 +45,7 @@ func Validate(c *gin.Context, obj interface{}, handler ValidatorFunc) bool {
 	return true
 }
 
-// func validate(data interface{}, rules, messages govalidator.MapData) url.Values {
+// url.Values == map[string][]string
 func validate(data interface{}, rules, messages govalidator.MapData) map[string][]string {
 
 	// 配置选项
@@ -57,5 +57,5 @@ func validate(data interface{}, rules, messages govalidator.MapData) map[string]
 	}
 
 	// 开始验证
-	return govalidator.New(opts).ValidateStruct()
+	return govalidator.New(opts).ValidateStruct() //govalidator这里就是真正调用API的地方
 }
