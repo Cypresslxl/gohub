@@ -12,7 +12,8 @@ type From struct {
 }
 
 type Email struct {
-	From    From
+	From From
+	// From
 	To      []string
 	Bcc     []string
 	Cc      []string

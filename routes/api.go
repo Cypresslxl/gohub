@@ -14,16 +14,17 @@ func RegisterAPIRoutes(r *gin.Engine) {
 	{
 		authGroup := v1.Group("/auth")
 		{
-			obj := new(auth.SignupController)
+			signup := new(auth.SignupController)
 			// 判断手机号是否已经注册
-			authGroup.POST("/signup/phone/exist", obj.IsPhoneExist)
+			authGroup.POST("/signup/phone/exist", signup.IsPhoneExist)
 			// 判断email是否已经注册
-			authGroup.POST("signup/email/exist", obj.IsEmailExist)
+			authGroup.POST("signup/email/exist", signup.IsEmailExist)
 			// 发送验证码
-			capt := new(auth.VerifyCodeController)
+			verify := new(auth.VerifyCodeController)
 			// 图片验证码，需要加限流
-			authGroup.POST("/verify-codes/captcha", capt.ShowCaptcha)
-			authGroup.POST("/verify-codes/phone", capt.SendUsingPhone)
+			authGroup.POST("/verify-codes/captcha", verify.ShowCaptcha)
+			authGroup.POST("/verify-codes/phone", verify.SendUsingPhone)
+			authGroup.POST("verify-codes/email", verify.SendUsingEmail)
 		}
 		// v1.GET("/", func(c *gin.Context) {
 		// JSON 格式相应
