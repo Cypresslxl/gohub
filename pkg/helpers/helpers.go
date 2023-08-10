@@ -2,7 +2,9 @@
 package helpers
 
 import (
+	"crypto/rand"
 	"fmt"
+	"io"
 	"reflect"
 	"time"
 )
@@ -40,4 +42,20 @@ func Empty(val interface{}) bool {
 // 输出为小数点后 3 位的 ms （microsecond 毫秒，千分之一秒）
 func MicrosecondsStr(elapsed time.Duration) string {
 	return fmt.Sprintf("%.3fms", float64(elapsed.Nanoseconds())/1e6)
+}
+
+// This function generates a random number by reading random bytes from the rand.Reader,
+// mapping those bytes to digits using the table array, and returning the resulting string representation of the random number.
+// RandomNumber 生成长度为 length 随机数字字符串
+func RandomNumber(length int) string {
+	table := [...]byte{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'} //This creates an array named table containing bytes representing the digits from 1 to 9 and 0.
+	b := make([]byte, length)                                            //This initializes a byte slice b of the specified length to store the generated random bytes.
+	n, err := io.ReadAtLeast(rand.Reader, b, length)                     //This uses the rand.Reader source to read at least length random bytes into the b slice. It returns the number of bytes read (n) and an error (err).
+	if n != length {
+		panic(err)
+	}
+	for i := 0; i < len(b); i++ {
+		b[i] = table[int(b[i])%len(table)]
+	}
+	return string(b)
 }

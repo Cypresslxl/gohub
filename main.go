@@ -44,6 +44,7 @@ func main() {
 	// Template: config.GetString("sms.aliyun.template_code"),
 	// Data:     map[string]string{"code": "123456"},
 	// })
+	// verifycode.NewVerifyCode().SendSMS("15679195296")
 
 	//test
 	// fmt.Println("name  : %s", config.GetString("app.name"))
