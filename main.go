@@ -40,6 +40,11 @@ func main() {
 	// logger.Dump(captcha.NewCaptcha().VerifyCaptcha("9hZ0bCaMBdc0oCAFj0fy", "242703"), "正确的答案")
 	// logger.Dump(captcha.NewCaptcha().VerifyCaptcha("4EAztsuaTDrotxaUjoEg", "000000"), "错误的答案")
 
+	// sms.NewSMS().Send("15679195296", sms.Message{
+	// Template: config.GetString("sms.aliyun.template_code"),
+	// Data:     map[string]string{"code": "123456"},
+	// })
+
 	//test
 	// fmt.Println("name  : %s", config.GetString("app.name"))
 	// fmt.Println("level : %d", config.GetInt("app.level"))
