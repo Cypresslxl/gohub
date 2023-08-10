@@ -12,7 +12,7 @@ type User struct {
 	models.BaseModel
 
 	Name     string `json:"name,omitempty"`
-	Email    string `json:"-"`
+	Email    string `json:"-"` //这里代表传给client时会被屏蔽，不会传过去
 	Phone    string `json:"-"`
 	Password string `json:"-"`
 
