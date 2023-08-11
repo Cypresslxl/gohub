@@ -3,9 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"gohub/app/http/middlewares"
 	"gohub/bootstrap"
 	btsConfig "gohub/config"
+	"gohub/pkg/auth"
 	"gohub/pkg/config"
+	"gohub/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,6 +40,11 @@ func main() {
 	bootstrap.SetupRedis()
 	// 初始化路由绑定
 	bootstrap.SetupRoute(router)
+
+	router.GET("/test_auth", middlewares.AuthJWT(), func(c *gin.Context) {
+		userModel := auth.CurrentUser(c)
+		response.Data(c, userModel)
+	})
 	// logger.Dump(captcha.NewCaptcha().VerifyCaptcha("9hZ0bCaMBdc0oCAFj0fy", "242703"), "正确的答案")
 	// logger.Dump(captcha.NewCaptcha().VerifyCaptcha("4EAztsuaTDrotxaUjoEg", "000000"), "错误的答案")
 
