@@ -44,9 +44,11 @@ func MicrosecondsStr(elapsed time.Duration) string {
 	return fmt.Sprintf("%.3fms", float64(elapsed.Nanoseconds())/1e6)
 }
 
-// This function generates a random number by reading random bytes from the rand.Reader,
-// mapping those bytes to digits using the table array, and returning the resulting string representation of the random number.
-// RandomNumber 生成长度为 length 随机数字字符串
+/*
+RandomNumber This function generates a random number by reading random bytes from the rand.Reader,
+mapping those bytes to digits using the table array, and returning the resulting string representation of the random number.
+RandomNumber 生成长度为 length 随机数字字符串
+*/
 func RandomNumber(length int) string {
 	table := [...]byte{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'} //This creates an array named table containing bytes representing the digits from 1 to 9 and 0.
 	b := make([]byte, length)                                            //This initializes a byte slice b of the specified length to store the generated random bytes.
@@ -58,4 +60,12 @@ func RandomNumber(length int) string {
 		b[i] = table[int(b[i])%len(table)]
 	}
 	return string(b)
+}
+
+// FirstElement 安全地获取 args[0]，避免 panic: runtime error: index out of range
+func FirstElement(args []string) string {
+	if len(args) > 0 {
+		return args[0]
+	}
+	return ""
 }

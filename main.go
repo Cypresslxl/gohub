@@ -1,10 +1,13 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	"github.com/gin-gonic/gin"
+	"github.com/spf13/cobra"
+	"gohub/app/cmd"
 	"gohub/bootstrap"
+	"gohub/pkg/console"
+	"os"
+
 	btsConfig "gohub/config"
 	"gohub/pkg/config"
 )
@@ -15,27 +18,69 @@ func init() {
 }
 
 func main() {
+
+	// 应用的主入口，默认调用 cmd.CmdServe 命令
+	var rootCmd = &cobra.Command{
+		Use:   "Gohub",
+		Short: "A simple forum project",
+		Long:  `Default will run "serve" command, you can use "-h" flag to see all subcommands`,
+
+		// rootCmd 的所有子命令都会执行以下代码
+		PersistentPreRun: func(command *cobra.Command, args []string) {
+
+			// 配置初始化，依赖命令行 --env 参数
+			config.InitConfig(cmd.Env)
+
+			// 初始化 Logger
+			bootstrap.SetupLogger()
+
+			// 初始化数据库
+			bootstrap.SetupDB()
+
+			// 初始化 Redis
+			bootstrap.SetupRedis()
+
+			// 初始化缓存
+		},
+	}
+
+	// 注册子命令
+	rootCmd.AddCommand(
+		cmd.CmdServe,
+	)
+
+	// 配置默认运行 Web 服务
+	cmd.RegisterDefaultCmd(rootCmd, cmd.CmdServe)
+
+	// 注册全局参数，--env
+	cmd.RegisterGlobalFlags(rootCmd)
+
+	// 执行主命令
+	if err := rootCmd.Execute(); err != nil {
+		console.Exit(fmt.Sprintf("Failed to run app with %v: %s", os.Args, err.Error()))
+	}
+
 	// 配置初始化，依赖命令行 --env 参数
 
-	var env string
-	// StringVar defines a string flag with specified name, default value, and usage string.
-	// The argument p points to a string variable in which to store the value of the flag.
-	flag.StringVar(&env, "env", "", "加载 .env 文件，如 --env=testing 加载的是 .env.testing 文件")
-	// fmt.Println("---env --- %s: ", env)
-	flag.Parse()
-	config.InitConfig(env)
-
-	// new 一个 Gin Engine 实例
-	router := gin.New()
-
-	// 初始化日志库
-	bootstrap.SetupLogger()
-	// 初始化数据库
-	bootstrap.SetupDB()
-	// 初始化 Redis
-	bootstrap.SetupRedis()
-	// 初始化路由绑定
-	bootstrap.SetupRoute(router)
+	//var env string
+	//// StringVar defines a string flag with specified name, default value, and usage string.
+	//// The argument p points to a string variable in which to store the value of the flag.
+	//flag.StringVar(&env, "env", "", "加载 .env 文件，如 --env=testing 加载的是 .env.testing 文件")
+	//// fmt.Println("---env --- %s: ", env)
+	//flag.Parse()
+	//config.InitConfig(env)
+	//
+	//// new 一个 Gin Engine 实例
+	//router := gin.New()
+	//
+	//// 初始化日志库
+	//bootstrap.SetupLogger()
+	//// 初始化数据库
+	//bootstrap.SetupDB()
+	//// 初始化 Redis
+	//bootstrap.SetupRedis()
+	//// 初始化路由绑定
+	//bootstrap.SetupRoute(router)
 
 	//router.GET("/test_auth", middlewares.AuthJWT(), func(c *gin.Context) {
 	//	userModel := auth.CurrentUser(c)
@@ -61,9 +106,9 @@ func main() {
 	// fmt.Println("debug : %s", config.GetBool("app.debug"))
 
 	// 运行服务
-	err := router.Run(":" + config.GetString("app.port"))
-	if err != nil {
-		// 错误处理，端口被占用了或者其他错误
-		fmt.Println(err.Error())
-	}
+	//err := router.Run(":" + config.GetString("app.port"))
+	//if err != nil {
+	//	// 错误处理，端口被占用了或者其他错误
+	//	fmt.Println(err.Error())
+	//}
 }
