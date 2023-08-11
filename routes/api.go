@@ -32,9 +32,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			authGroup.POST("verify-codes/email", verify.SendUsingEmail)
 
 			//3.login
-			lgc := new(auth.LoginController)
+			login := new(auth.LoginController)
 			// 使用手机号，短信验证码进行登录
-			authGroup.POST("/login/using-phone", lgc.LoginByPhone)
+			authGroup.POST("/login/using-phone", login.LoginByPhone)
+			//使用密码登陆，LoginID可以是phone,email,userName
+			authGroup.POST("login/using-password", login.LoginByPassword)
 		}
 		// v1.GET("/", func(c *gin.Context) {
 		// JSON 格式相应
