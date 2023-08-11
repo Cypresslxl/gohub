@@ -52,9 +52,9 @@ func LimitPerRoute(limit string) gin.HandlerFunc {
 	}
 }
 
-func limitHandler(c *gin.Context, key string, limit string) bool {
+func limitHandler(c *gin.Context, key, limit string) bool {
 
-	// 获取超额的情况
+	// 获取超额的情况,检查是否超额
 	rate, err := limiter.CheckRate(c, key, limit)
 	if err != nil {
 		logger.LogIf(err)

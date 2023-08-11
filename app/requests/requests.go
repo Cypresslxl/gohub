@@ -40,7 +40,6 @@ func Validate(c *gin.Context, data interface{}, handler ValidatorFunc) bool {
 		// })
 		return false
 	}
-
 	return true
 }
 

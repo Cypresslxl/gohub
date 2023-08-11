@@ -33,14 +33,14 @@ func routeToKeyString(routeName string) string {
 func CheckRate(c *gin.Context, key, formatted string) (limiterlib.Context, error) {
 	// 1.实例化依赖的 limiter 包的 limiter.Rate 对象
 	var context limiterlib.Context
-	rate, err := limiterlib.NewRateFromFormatted(formatted)
+	rate, err := limiterlib.NewRateFromFormatted(formatted) //NewRateFromFormatted returns the rate from the formatted version.
 	if err != nil {
 		logger.LogIf(err)
 		return context, err
 	}
 
 	// 2.初始化存储，使用我们程序里共用的 redis.Redis 对象
-	store, err := sredis.NewStoreWithOptions(redis.Redis.Client, limiterlib.StoreOptions{
+	store, err := sredis.NewStoreWithOptions(redis.Redis.Client, limiterlib.StoreOptions{ //NewStoreWithOptions returns an instance of redis store with options.
 		// 为 limiter 设置前缀，保持 redis 里数据的整洁
 		Prefix: config.GetString("app.name") + ":limiter",
 	})
@@ -52,7 +52,7 @@ func CheckRate(c *gin.Context, key, formatted string) (limiterlib.Context, error
 	// 3.使用上面的初始化的 limiter.Rate 对象和存储对象
 	limiterObj := limiterlib.New(store, rate)
 
-	// 4.获取限流的结果
+	// 4.Get the result of limiting traffic
 	if c.GetBool("limiter-once") {
 		// Peek() 取结果，不增加访问次数
 		return limiterObj.Peek(c, key)
