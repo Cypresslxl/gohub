@@ -3,14 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"gohub/app/http/middlewares"
+	"github.com/gin-gonic/gin"
 	"gohub/bootstrap"
 	btsConfig "gohub/config"
-	"gohub/pkg/auth"
 	"gohub/pkg/config"
-	"gohub/pkg/response"
-
-	"github.com/gin-gonic/gin"
 )
 
 func init() {
@@ -41,10 +37,15 @@ func main() {
 	// 初始化路由绑定
 	bootstrap.SetupRoute(router)
 
-	router.GET("/test_auth", middlewares.AuthJWT(), func(c *gin.Context) {
-		userModel := auth.CurrentUser(c)
-		response.Data(c, userModel)
-	})
+	//router.GET("/test_auth", middlewares.AuthJWT(), func(c *gin.Context) {
+	//	userModel := auth.CurrentUser(c)
+	//	response.Data(c, userModel)
+	//})
+
+	//router.GET("/test_guest", middlewares.GuestJWT(), func(c *gin.Context) {
+	//	c.String(http.StatusOK, "Hello guest")
+	//})
+
 	// logger.Dump(captcha.NewCaptcha().VerifyCaptcha("9hZ0bCaMBdc0oCAFj0fy", "242703"), "正确的答案")
 	// logger.Dump(captcha.NewCaptcha().VerifyCaptcha("4EAztsuaTDrotxaUjoEg", "000000"), "错误的答案")
 

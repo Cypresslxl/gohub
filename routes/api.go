@@ -15,30 +15,37 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		authGroup := v1.Group("/auth")
 		{
 			//1.signup
-			signup := new(auth.SignupController)
+			signupController := new(auth.SignupController)
 			// 判断手机号是否已经注册
-			authGroup.POST("/signup/phone/exist", signup.IsPhoneExist)
+			authGroup.POST("/signup/phone/exist", signupController.IsPhoneExist)
 			// 判断email是否已经注册
-			authGroup.POST("signup/email/exist", signup.IsEmailExist)
+			authGroup.POST("signup/email/exist", signupController.IsEmailExist)
 			//用手机号/邮箱注册账号
-			authGroup.POST("/signup/using-phone", signup.SignupUsingPhone)
-			authGroup.POST("/signup/using-email", signup.SignupUsingEmail)
+			authGroup.POST("/signup/using-phone", signupController.SignupUsingPhone)
+			authGroup.POST("/signup/using-email", signupController.SignupUsingEmail)
 
 			// 2.captcha 发送验证码
-			verify := new(auth.VerifyCodeController)
+			verifyCodeController := new(auth.VerifyCodeController)
 			// 图片验证码，需要加限流
-			authGroup.POST("/verify-codes/captcha", verify.ShowCaptcha)
-			authGroup.POST("/verify-codes/phone", verify.SendUsingPhone)
-			authGroup.POST("verify-codes/email", verify.SendUsingEmail)
+			authGroup.POST("/verify-codes/captcha", verifyCodeController.ShowCaptcha)
+			authGroup.POST("/verify-codes/phone", verifyCodeController.SendUsingPhone)
+			authGroup.POST("verify-codes/email", verifyCodeController.SendUsingEmail)
 
 			//3.login
-			login := new(auth.LoginController)
+			loginController := new(auth.LoginController)
 			// 使用手机号，短信验证码进行登录
-			authGroup.POST("/login/using-phone", login.LoginByPhone)
+			authGroup.POST("/login/using-phone", loginController.LoginByPhone)
 			//使用密码登陆，LoginID可以是phone,email,userName
-			authGroup.POST("login/using-password", login.LoginByPassword)
+			authGroup.POST("login/using-password", loginController.LoginByPassword)
 			//refresh token
-			authGroup.POST("login/refresh-token", login.RefreshToken)
+			authGroup.POST("login/refresh-token", loginController.RefreshToken)
+
+			//4.reset password
+			passwordController := new(auth.PasswordController)
+			//通过手机号和验证码reset密码
+			authGroup.POST("/password-reset/using-phone", passwordController.ResetByPhone)
+			//通过邮箱和验证码reset密码
+			authGroup.POST("/password-reset/using-email", passwordController.ResetByEmail)
 		}
 		// v1.GET("/", func(c *gin.Context) {
 		// JSON 格式相应
