@@ -37,6 +37,8 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			authGroup.POST("/login/using-phone", login.LoginByPhone)
 			//使用密码登陆，LoginID可以是phone,email,userName
 			authGroup.POST("login/using-password", login.LoginByPassword)
+			//refresh token
+			authGroup.POST("login/refresh-token", login.RefreshToken)
 		}
 		// v1.GET("/", func(c *gin.Context) {
 		// JSON 格式相应
