@@ -170,7 +170,7 @@ func (jwt *JWT) expireAtTime() int64 {
 	}
 
 	expire := time.Duration(expireTime) * time.Minute
-	return timenow.Add(expire).Unix()
+	return timenow.Add(expire).Unix() //在timenow的基础上增加expire时间，返回过期的时间
 }
 
 // parseTokenString 使用 jwtpkg.ParseWithClaims 解析 Token
