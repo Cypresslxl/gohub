@@ -24,7 +24,6 @@ func Exists(fileToCheck string) bool {
 	return true
 }
 
-// FileNameWithoutExtension 去除文件后缀名
 func FileNameWithoutExtension(fileName string) string {
-	return strings.TrimSuffix(fileName, filepath.Ext(fileName)) //先获取文件后缀，再删除文件后缀
+	return strings.TrimSuffix(fileName, filepath.Ext(fileName))
 }
