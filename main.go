@@ -62,6 +62,7 @@ func main() {
 	cmd.RegisterGlobalFlags(rootCmd)
 
 	// 执行主命令
+	//Execute uses the args (os.Args[1:] by default) and run through the command tree finding appropriate matches for commands and then corresponding flags.
 	if err := rootCmd.Execute(); err != nil {
 		console.Exit(fmt.Sprintf("Failed to run app with %v: %s", os.Args, err.Error()))
 	}
