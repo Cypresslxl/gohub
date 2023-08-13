@@ -76,7 +76,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				categoryGroup.GET("/", category.Index)
 				categoryGroup.POST("", middlewares.AuthJWT(), category.Store) //登录用户才能创建分类，所以我们用了 AuthJWT 中间件。
 				categoryGroup.PUT("/:id", middlewares.AuthJWT(), category.Update)
-
+				categoryGroup.DELETE("/:id", middlewares.AuthJWT(), category.Delete)
 			}
 			// v1.GET("/", func(c *gin.Context) {
 			// JSON 格式相应
