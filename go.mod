@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/KenmyZhang/aliyun-communicate v0.0.0-20180308134849-7997edc57454
+	github.com/bxcodec/faker/v3 v3.8.1
 	github.com/gertd/go-pluralize v0.2.1
 	github.com/gin-gonic/gin v1.9.1
 	github.com/golang-jwt/jwt v3.2.2+incompatible
