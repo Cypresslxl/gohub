@@ -66,6 +66,7 @@ func Paginate(c *gin.Context, db *gorm.DB, data interface{}, baseURL string, per
 	p.initProperties(perPage, baseURL)
 
 	// 查询数据库preload associations with given conditions
+	//clause.Associations is a constant value provided by the GORM (Go Object Relational Mapping) library in the context of its query builder. It's used to indicate that associations (related data) should be preloaded when querying the database.
 	err := p.query.Preload(clause.Associations). // 读取关联
 							Order(p.Sort + " " + p.Order). // 排序
 							Limit(p.PerPage).
