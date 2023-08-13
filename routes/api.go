@@ -1,6 +1,7 @@
 package routes
 
 import (
+	controllers "gohub/app/http/controllers/api/v1"
 	"gohub/app/http/controllers/api/v1/auth"
 	"gohub/app/http/middlewares"
 
@@ -28,7 +29,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				// 判断手机号是否已经注册
 				authGroup.POST("/signup/phone/exist", middlewares.GuestJWT(), signupController.IsPhoneExist)
 				// 判断email是否已经注册
-				authGroup.POST("signup/email/exist", middlewares.GuestJWT(), signupController.IsEmailExist)
+				authGroup.POST("/signup/email/exist", middlewares.GuestJWT(), signupController.IsEmailExist)
 				//用手机号/邮箱注册账号
 				authGroup.POST("/signup/using-phone", middlewares.GuestJWT(), signupController.SignupUsingPhone)
 				authGroup.POST("/signup/using-email", middlewares.GuestJWT(), signupController.SignupUsingEmail)
@@ -46,10 +47,10 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				// 使用手机号，短信验证码进行登录
 				authGroup.POST("/login/using-phone", middlewares.GuestJWT(), loginController.LoginByPhone)
 				//使用密码登陆，LoginID可以是phone,email,userName
-				authGroup.POST("login/using-password", middlewares.GuestJWT(), loginController.LoginByPassword)
+				authGroup.POST("/login/using-password", middlewares.GuestJWT(), loginController.LoginByPassword)
 				//
 				//3.2refresh token
-				authGroup.POST("login/refresh-token", middlewares.AuthJWT(), loginController.RefreshToken)
+				authGroup.POST("/login/refresh-token", middlewares.AuthJWT(), loginController.RefreshToken)
 
 				//4.reset password
 				passwordController := new(auth.PasswordController)
@@ -57,6 +58,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				authGroup.POST("/password-reset/using-phone", middlewares.AuthJWT(), passwordController.ResetByPhone)
 				//通过邮箱和验证码reset密码
 				authGroup.POST("/password-reset/using-email", middlewares.AuthJWT(), passwordController.ResetByEmail)
+
+				//	5.User
+				user := new(controllers.UsersController)
+				//h获取当前用户需要Token认证，所以使用AuthJWT()返回的中间件
+				authGroup.GET("/user", middlewares.AuthJWT(), user.CurrentUser)
 			}
 			// v1.GET("/", func(c *gin.Context) {
 			// JSON 格式相应
@@ -66,6 +72,5 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			// })
 			// })
 		}
-
 	}
 }
