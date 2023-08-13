@@ -63,6 +63,10 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				user := new(controllers.UsersController)
 				//h获取当前用户需要Token认证，所以使用AuthJWT()返回的中间件
 				authGroup.GET("/user", middlewares.AuthJWT(), user.CurrentUser)
+				usersGroup := authGroup.Group("/users")
+				{
+					usersGroup.GET("", user.Index)
+				}
 			}
 			// v1.GET("/", func(c *gin.Context) {
 			// JSON 格式相应
