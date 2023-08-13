@@ -1,0 +1,33 @@
+package migrations
+
+import (
+	"database/sql"
+	"gohub/app/models"
+	"gohub/pkg/migrate"
+
+	"gorm.io/gorm"
+)
+
+func init() {
+
+	type Category struct {
+		models.BaseModel
+
+		Name        string `gorm:"type:varchar(255);not null;index"`
+		Description string `gorm:"type:varchar(255);default:null"`
+		//Phone       string `gorm:"type:varchar(20);index;default:null"`
+		//Password    string `gorm:"type:varchar(255)"`
+
+		models.CommonTimestampsField
+	}
+
+	up := func(migrator gorm.Migrator, DB *sql.DB) {
+		migrator.AutoMigrate(&Category{})
+	}
+
+	down := func(migrator gorm.Migrator, DB *sql.DB) {
+		migrator.DropTable(&Category{})
+	}
+
+	migrate.Add("2023_08_13_162949_add_categories_table", up, down)
+}
