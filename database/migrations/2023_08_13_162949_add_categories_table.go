@@ -15,8 +15,6 @@ func init() {
 
 		Name        string `gorm:"type:varchar(255);not null;index"`
 		Description string `gorm:"type:varchar(255);default:null"`
-		//Phone       string `gorm:"type:varchar(20);index;default:null"`
-		//Password    string `gorm:"type:varchar(255)"`
 
 		models.CommonTimestampsField
 	}

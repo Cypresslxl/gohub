@@ -19,7 +19,7 @@ func init() {
 }
 
 func main() {
-
+	//zap.S().Debugf("hihi")
 	// 应用的主入口，默认调用 cmd.CmdServe 命令
 	var rootCmd = &cobra.Command{
 		Use:   "Gohub",
