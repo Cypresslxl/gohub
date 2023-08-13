@@ -25,6 +25,7 @@ func (ctrl *UsersController) Index(c *gin.Context) {
 		return
 	}
 
+	//执行到这说明client传过来的数据已经verified通过了
 	data, pager := user.Paginate(c, 10)
 	response.JSON(c, gin.H{
 		"data":  data,

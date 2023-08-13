@@ -63,6 +63,7 @@ func Paginate(c *gin.Context, db *gorm.DB, data interface{}, baseURL string, per
 		query: db,
 		ctx:   c,
 	}
+	//Initializes the attributes required for a page split, and queries the database based on those attributes
 	p.initProperties(perPage, baseURL)
 
 	// 查询数据库preload associations with given conditions
