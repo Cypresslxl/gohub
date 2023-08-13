@@ -65,7 +65,7 @@ func Paginate(c *gin.Context, db *gorm.DB, data interface{}, baseURL string, per
 	}
 	p.initProperties(perPage, baseURL)
 
-	// 查询数据库
+	// 查询数据库preload associations with given conditions
 	err := p.query.Preload(clause.Associations). // 读取关联
 							Order(p.Sort + " " + p.Order). // 排序
 							Limit(p.PerPage).
@@ -102,7 +102,7 @@ func (p *Paginator) initProperties(perPage int, baseURL string) {
 	p.TotalCount = p.getTotalCount()
 	p.TotalPage = p.getTotalPage()
 	p.Page = p.getCurrentPage()
-	p.Offset = (p.Page - 1) * p.PerPage
+	p.Offset = (p.Page - 1) * p.PerPage //读取数据库时的值offset，limit offset v1,v2,从v1开始的v2条数据
 }
 
 func (p Paginator) getPerPage(perPage int) int {
