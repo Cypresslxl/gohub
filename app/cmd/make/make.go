@@ -80,6 +80,7 @@ func init() {
 		CmdMakeRequest,
 		CmdMakeMigration,
 		CmdMakeFactory,
+		CmdMakeSeeder,
 	)
 }
 
