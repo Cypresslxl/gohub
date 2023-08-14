@@ -59,14 +59,15 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				//通过邮箱和验证码reset密码
 				authGroup.POST("/password-reset/using-email", middlewares.AuthJWT(), passwordController.ResetByEmail)
 
-				//	5.User
-				user := new(controllers.UsersController)
-				//h获取当前用户需要Token认证，所以使用AuthJWT()返回的中间件
-				authGroup.GET("/user", middlewares.AuthJWT(), user.CurrentUser)
-				usersGroup := authGroup.Group("/users")
-				{
-					usersGroup.GET("", user.Index)
-				}
+			}
+			//--1--.User
+			user := new(controllers.UsersController)
+			//h获取当前用户需要Token认证，所以使用AuthJWT()返回的中间件
+			authGroup.GET("/user", middlewares.AuthJWT(), user.CurrentUser)
+			usersGroup := v1.Group("/users")
+			{
+				usersGroup.GET("", user.Index)
+				usersGroup.PUT("", middlewares.AuthJWT(), user.UpdateProfile)
 			}
 
 			//--2--category

@@ -17,7 +17,7 @@ func init() {
 			"database": config.Env("REDIS_MAIN_DB", 1),
 
 			//缓存cache 包使用0，缓存清理理应当不影响业务
-			"database_cache": config.Env("REDIS_CACHE_DB"),
+			"database_cache": config.Env("REDIS_CACHE_DB", 0),
 		}
 	})
 }

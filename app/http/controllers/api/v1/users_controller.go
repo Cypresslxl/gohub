@@ -33,6 +33,24 @@ func (ctrl *UsersController) Index(c *gin.Context) {
 	})
 }
 
+func (ctrl *UsersController) UpdateProfile(c *gin.Context) {
+	request := requests.UserUpdateProfileRequest{}
+	if ok := requests.Validate(c, &request, requests.UserUpdateProfile); !ok {
+		return
+	}
+
+	currentUser := auth.CurrentUser(c)
+	currentUser.Name = request.Name
+	currentUser.City = request.City
+	currentUser.Introduction = request.Introduction
+	rowsAffected := currentUser.Save()
+	if rowsAffected > 0 {
+		response.Data(c, currentUser)
+	} else {
+		response.Abort500(c, "更新失败，请稍后尝试～")
+	}
+}
+
 //Index 所有用户
 //func (strl *UsersController) Index(c *gin.Context) {
 //	data, pager := user.Paginate(c, 10)

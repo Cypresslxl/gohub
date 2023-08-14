@@ -45,14 +45,14 @@ func Paginate(c *gin.Context, perPage int) (links []Link, paging paginator.Pagin
 
 func AllCached() (links []Link) {
 	//	设置缓存
-	cacheKey := "link:all"
+	cacheKey := "links:all"
 	//设置过期时间
 	expireTime := 120 * time.Minute
 
 	//	取数据
 	cache.GetObject(cacheKey, &links)
 
-	//如果数据为空
+	//如果在cache中取不到数据（数据为空），就从数据库中拉取
 	if helpers.Empty(links) {
 		//查询数据库
 		links = All()

@@ -11,7 +11,12 @@ import (
 type User struct {
 	models.BaseModel
 
-	Name     string `json:"name,omitempty"`
+	Name string `json:"name,omitempty"`
+
+	City         string `json:"name,omitempty"`
+	Introduction string `json:"introduction,omitempty"`
+	Avatar       string `json:"avatar,omitempty"`
+
 	Email    string `json:"-"` //这里代表传给client时会被屏蔽，不会传过去
 	Phone    string `json:"-"`
 	Password string `json:"-"`
