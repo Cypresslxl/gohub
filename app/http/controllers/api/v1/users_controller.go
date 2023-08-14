@@ -51,6 +51,22 @@ func (ctrl *UsersController) UpdateProfile(c *gin.Context) {
 	}
 }
 
+func (ctrl *UsersController) UpdateEmail(c *gin.Context) {
+	request := requests.UserUpdateEmailRequest{}
+	if ok := requests.Validate(c, &request, requests.UserUpdateEmail); !ok {
+		return
+	}
+
+	currentUser := auth.CurrentUser(c)
+	currentUser.Email = request.Email
+	rowsAffected := currentUser.Save()
+	if rowsAffected > 0 {
+		response.Success(c)
+	} else {
+		response.Abort500(c, "EMail Update failed,please try it later ~")
+	}
+}
+
 //Index 所有用户
 //func (strl *UsersController) Index(c *gin.Context) {
 //	data, pager := user.Paginate(c, 10)
