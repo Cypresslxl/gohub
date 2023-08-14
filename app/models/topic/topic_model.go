@@ -11,7 +11,7 @@ import (
 type Topic struct {
 	models.BaseModel
 
-	Titile     string `json:"titile,omitempty"`
+	Title      string `json:"title,omitempty"`
 	Body       string `json:"body,omitempty"`
 	UserID     string `json:"user-id,omitempty"`
 	CategoryID string `json:"category-id,omitempty"`

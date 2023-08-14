@@ -25,7 +25,7 @@ func init() {
 		Body       string `gorm:"type:longtext;not null"`
 		UserID     string `gorm:"type:bigint;not null;index"`
 		CategoryID string `gorm:"type:bigint;not bull;index"`
-
+		//index indicates that the database should create an index on this column, which can be useful for querying content associated with specific users efficiently.
 		//会创建user_id 和 category_id 外键的约束
 		User     User
 		Category Category

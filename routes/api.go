@@ -78,13 +78,14 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				categoryGroup.PUT("/:id", middlewares.AuthJWT(), category.Update)
 				categoryGroup.DELETE("/:id", middlewares.AuthJWT(), category.Delete)
 			}
-			// v1.GET("/", func(c *gin.Context) {
-			// JSON 格式相应
-			// c.JSON(http.StatusOK, gin.H{
-			// "code":    1,
-			// "message": "this is v1",
-			// })
-			// })
+
+			//--3--topic
+			topics := new(controllers.TopicsController)
+			topicsGroup := v1.Group("/topics")
+			{
+				topicsGroup.POST("", middlewares.AuthJWT(), topics.Store)
+			}
+
 		}
 	}
 }
