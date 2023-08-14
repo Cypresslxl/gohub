@@ -83,11 +83,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			topics := new(controllers.TopicsController)
 			topicsGroup := v1.Group("/topics")
 			{
+				topicsGroup.GET("", topics.Index)
 				topicsGroup.POST("", middlewares.AuthJWT(), topics.Store)
 				topicsGroup.PUT("/:id", middlewares.AuthJWT(), topics.Update)
 				topicsGroup.DELETE("/:id", middlewares.AuthJWT(), topics.Delete)
 			}
-
 		}
 	}
 }
