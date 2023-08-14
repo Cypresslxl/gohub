@@ -85,6 +85,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			{
 				topicsGroup.POST("", middlewares.AuthJWT(), topics.Store)
 				topicsGroup.PUT("/:id", middlewares.AuthJWT(), topics.Update)
+				topicsGroup.DELETE("/:id", middlewares.AuthJWT(), topics.Delete)
 			}
 
 		}
