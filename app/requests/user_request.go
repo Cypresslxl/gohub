@@ -5,6 +5,7 @@ import (
 	"github.com/thedevsaddam/govalidator"
 	"gohub/app/requests/validators"
 	"gohub/pkg/auth"
+	"mime/multipart"
 )
 
 type UserUpdateProfileRequest struct {
@@ -152,4 +153,29 @@ func UserUpdatePassword(data interface{}, c *gin.Context) map[string][]string {
 	errs = validators.ValidatePasswordConfirm(_data.NewPassword, _data.NewPasswordConfirm, errs)
 
 	return errs
+}
+
+// UserUpdateAvatarRequest *multipart.FileHeader 是 Govalidator 验证文件必须使用的类型。 form:"avatar" 是指示 gin 在调用 c.ShouldBind() 时，从表单请求中读取。 另外验证规则里，file:avatar ，是 Govalidator 规定了，验证文件必须在字段前方加 file: 前缀。
+type UserUpdateAvatarRequest struct {
+	Avatar *multipart.FileHeader `valid:"avatar" form:"avatar"`
+}
+
+func UserUpdateAvatar(data interface{}, c *gin.Context) map[string][]string {
+
+	rules := govalidator.MapData{
+		// size 的单位为 bytes
+		// - 1024 bytes 为 1kb
+		// - 1048576 bytes 为 1mb
+		// - 20971520 bytes 为 20mb
+		"file:avatar": []string{"ext:png,jpg,jpeg", "size:20971520", "required"},
+	}
+	messages := govalidator.MapData{
+		"file:avatar": []string{
+			"ext:ext头像只能上传 png, jpg, jpeg 任意一种的图片",
+			"size:头像文件最大不能超过 20MB",
+			"required:必须上传图片",
+		},
+	}
+
+	return validateFile(c, data, rules, messages)
 }
