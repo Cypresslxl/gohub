@@ -69,7 +69,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				}
 			}
 
-			//category
+			//--2--category
 			category := new(controllers.CategoriesController)
 			categoryGroup := v1.Group("/categories")
 			{

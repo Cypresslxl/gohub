@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// 存放所有 Seeder
+// 存放所有 Seeder,Seeder用于将
 var seeders []Seeder
 
 // 按顺序执行的 Seeder 数组

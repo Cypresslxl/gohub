@@ -29,7 +29,7 @@ func runWeb(cmd *cobra.Command, args []string) {
 
 	// gin 实例
 	router := gin.New()
-
+	//router.Use(gin.Recovery())
 	// 初始化路由绑定
 	bootstrap.SetupRoute(router)
 
