@@ -15,7 +15,7 @@ type RedisStore struct {
 func NewRedisStore(address, username, password string, db int) *RedisStore {
 	rs := &RedisStore{}
 	rs.RedisClient = redis.NewClient(address, username, password, db)
-	rs.KeyPrefix = config.GetString("app.name") + ":cache:" //gohub:cache:
+	rs.KeyPrefix = config.GetString("app.name") + ":cache:" //Playground:cache:
 	return rs
 }
 
