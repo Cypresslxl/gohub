@@ -29,11 +29,13 @@ func registerGlobalMiddleWare(router *gin.Engine) {
 		middlewares.Logger(), //函数的返回值是 ： gin.HandlerFunc ， 也就是func(*Context)，这个类型的函数就是middleware
 		// gin.Recovery(),
 		middlewares.Recovery(),
+		//	强制 User-Agent 标头
+		middlewares.ForceUA(),
 	)
 
 }
 
-// 处理404请求
+// 处理404请求.
 func setup404Handler(r *gin.Engine) {
 	// 处理404请求
 	r.NoRoute(func(cx *gin.Context) {
