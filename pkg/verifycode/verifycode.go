@@ -41,7 +41,7 @@ func NewVerifyCode() *VerifyCode {
 //	verifycode.NewVerifyCode().SendSMS(request.Phone)
 func (vc *VerifyCode) SendSMS(phone string) bool {
 
-	// 生成验证码同时存储在redis中
+	// 生成验证码同时存储在redis中,手机邮箱发送的验证码都是服务器生成，调用邮箱或阿里云SMS第三方服务商API帮忙发送
 	code := vc.generateVerifyCode(phone)
 
 	// 方便本地和 API 自动测试
@@ -49,7 +49,7 @@ func (vc *VerifyCode) SendSMS(phone string) bool {
 		return true
 	}
 
-	// 发送短信
+	// 发送短信，这里需要调用阿里云SMS服务
 	return sms.NewSMS().Send(phone, sms.Message{
 		Template: config.GetString("sms.aliyun.template_code"),
 		Data:     map[string]string{"code": code},
@@ -107,7 +107,7 @@ func (vc *VerifyCode) generateVerifyCode(key string) string {
 
 	// 为方便开发，本地环境使用固定验证码
 	if app.IsLocal() {
-		code = config.GetString("verifycode.debug_code")
+		code = config.GetString("verifycode.debug_code") //123456
 	}
 
 	logger.DebugJSON("验证码", "生成验证码", map[string]string{key: code})

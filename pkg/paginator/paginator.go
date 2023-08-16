@@ -71,7 +71,7 @@ func Paginate(c *gin.Context, db *gorm.DB, data interface{}, baseURL string, per
 	err := p.query.Preload(clause.Associations). // 读取关联
 							Order(p.Sort + " " + p.Order). // 排序
 							Limit(p.PerPage).
-							Offset(p.Offset).
+							Offset(p.Offset). //从offset开始获取limit条数据
 							Find(data).
 							Error
 

@@ -187,7 +187,7 @@ func (jwt *JWT) getTokenFromHeader(c *gin.Context) (string, error) {
 	if authHeader == "" {
 		return "", ErrHeaderEmpty
 	}
-	// 按空格分割
+	// 按空格分割  ，： (bearer : token...)
 	parts := strings.SplitN(authHeader, " ", 2)
 	if !(len(parts) == 2 && parts[0] == "Bearer") {
 		return "", ErrHeaderMalformed

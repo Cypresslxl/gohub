@@ -124,7 +124,7 @@ func SignupUsingPhone(data interface{}, c *gin.Context) map[string][]string {
 
 	_data := data.(*SignupUsingPhoneRequest) //assertion and conversion
 	errs = validators.ValidatePasswordConfirm(_data.Password, _data.PasswordConfirm, errs)
-	errs = validators.ValidateVerifyCode(_data.Phone, _data.VerifyCode, errs) //检验手机号是否和验证码想对应
+	errs = validators.ValidateVerifyCode(_data.Phone, _data.VerifyCode, errs) //检验手机号是否和redis中的验证码相对应
 
 	return errs
 }

@@ -11,7 +11,7 @@ import (
 // viper 库实例
 var viper *viperlib.Viper
 
-// Configue 动态加载配置信息
+// ConfigFunc : Dynamic loading of configuration information
 type ConfigFunc func() map[string]interface{}
 
 // 先加载到此数组，loadConfig 再动态生成配置信息
@@ -24,7 +24,7 @@ func init() {
 	//             "props", "prop", "env", "dotenv"
 	viper.SetConfigType("env")
 
-	// 3.环境变量配置文件查找的路径，相对于 main.go文件的路径
+	// 3.relative path
 	viper.AddConfigPath(".")
 	// 4. 设置环境变量前缀，用以区分 Go 的系统环境变量
 	viper.SetEnvPrefix("appenv")
@@ -36,9 +36,9 @@ func init() {
 
 // InitConfig 初始化配置信息，完成对环境变量以及 config 信息的加载
 func InitConfig(env string) {
-	// 1. 加载环境变量
+	// 1. Load environment variable
 	loadEnv(env)
-	// 2. 注册配置信息
+	// 2. Register configuration information
 	loadConfig()
 }
 

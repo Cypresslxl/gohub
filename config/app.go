@@ -8,7 +8,7 @@ func init() {
 			// 应用名称
 			"name": config.Env("APP_NAME", "Gohub"),
 			// 当前环境，用以区分多环境，一般为 local, stage, production, test
-			"env": config.Env("APP_ENV", "production"),
+			"env": config.Env("APP_ENV", "production"), //配置文件为 app.env,这里为app.app_env,注意区分
 			// 是否进入调试模式
 			"debug": config.Env("APP_DEBUG", "false"),
 			// 应用服务端口

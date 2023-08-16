@@ -32,7 +32,6 @@ func NewSMS() *SMS {
 			Driver: &Aliyun{},
 		}
 	})
-
 	return internalSMS
 }
 

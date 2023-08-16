@@ -12,11 +12,6 @@ import (
 // ValidatorFunc 验证函数类型
 type ValidatorFunc func(interface{}, *gin.Context) map[string][]string
 
-// Validate 控制器里调用示例：
-//
-//	if ok := requests.Validate(c, &requests.UserSaveRequest{}, requests.UserSave); !ok {
-//	    return
-//	}
 func Validate(c *gin.Context, data interface{}, handler ValidatorFunc) bool {
 	// 1. 解析请求，支持 JSON 数据、表单请求和 URL Query
 	if err := c.ShouldBind(data); err != nil {
@@ -34,10 +29,6 @@ func Validate(c *gin.Context, data interface{}, handler ValidatorFunc) bool {
 	// 3. 判断验证是否通过
 	if len(errs) > 0 {
 		response.ValidationError(c, errs)
-		// c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-		// "message": "请求验证不通过，具体请查看 errors",
-		// "errors":  errs,
-		// })
 		return false
 	}
 	return true

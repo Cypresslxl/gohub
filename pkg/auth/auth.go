@@ -15,7 +15,7 @@ func Attempt(loginID string, password string) (user.User, error) {
 		return user.User{}, errors.New("账号不存在")
 	}
 
-	if !userModel.ComparePassword(password) {
+	if !userModel.ComparePassword(password) { //不能直接将用户提交密码的和数据库里的密码对比，因为数据库里的密码是被加密过了的
 		return user.User{}, errors.New("密码错误")
 	}
 
@@ -24,7 +24,7 @@ func Attempt(loginID string, password string) (user.User, error) {
 
 // LoginByPhone 登录指定用户
 func LoginByPhone(phone string) (user.User, error) {
-	userModel := user.GetByPhone(phone)
+	userModel := user.GetByPhone(phone) //通过手机号查询数据库获取指定用户信息
 	if userModel.ID == 0 {
 		return user.User{}, errors.New("手机号未注册")
 	}

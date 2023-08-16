@@ -30,7 +30,7 @@ func (pc *PasswordController) ResetByPhone(c *gin.Context) {
 		response.Abort404(c)
 	} else {
 		userModel.Password = request.Password
-		userModel.Save()
+		userModel.Save() //为什么明文密码加Save到数据库后会自动加密，因为有hook函数（app/models/user/user_hook.go)
 
 		response.Success(c)
 	}

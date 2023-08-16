@@ -15,7 +15,7 @@ type LoginController struct {
 	v1.BaseAPIController
 }
 
-// LoginByPhone 手机登录
+// LoginByPhone 手机登录+手机验证码
 func (lc *LoginController) LoginByPhone(c *gin.Context) {
 
 	// 1. 验证表单
@@ -52,9 +52,8 @@ func (lc *LoginController) LoginByPassword(c *gin.Context) {
 	if err != nil {
 		// 失败，显示错误提示
 		response.Unauthorized(c, "账号不存在或密码错误")
-
 	} else {
-		token := jwt.NewJWT().IssueToken(user.GetStringID(), user.Name)
+		token := jwt.NewJWT().IssueToken(user.GetStringID(), user.Name) //更具用户ID和Name生成token
 		response.JSON(c, gin.H{
 			"token": token,
 		})

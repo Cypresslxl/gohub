@@ -12,6 +12,20 @@ type CategoriesController struct {
 	BaseAPIController
 }
 
+func (ctrl *CategoriesController) Index(c *gin.Context) {
+	request := requests.PaginationRequest{}
+	if ok := requests.Validate(c, &request, requests.Pagination); !ok {
+		return
+	}
+
+	//user,category都有实现自己的Paginate函数
+	data, pager := category.Paginate(c, 10)
+	response.JSON(c, gin.H{
+		"data":  data,
+		"pager": pager,
+	})
+}
+
 func (ctrl *CategoriesController) Store(c *gin.Context) {
 
 	request := requests.CategoryRequest{}
@@ -55,20 +69,6 @@ func (ctrl *CategoriesController) Update(c *gin.Context) {
 	} else {
 		response.Abort500(c)
 	}
-}
-
-func (ctrl *CategoriesController) Index(c *gin.Context) {
-	request := requests.PaginationRequest{}
-	if ok := requests.Validate(c, &request, requests.Pagination); !ok {
-		return
-	}
-
-	//user,category都有实现自己的Paginate函数
-	data, pager := category.Paginate(c, 10)
-	response.JSON(c, gin.H{
-		"data":  data,
-		"pager": pager,
-	})
 }
 
 func (ctrl *CategoriesController) Delete(c *gin.Context) {

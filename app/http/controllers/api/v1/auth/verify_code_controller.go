@@ -41,15 +41,15 @@ func (vc *VerifyCodeController) ShowCaptcha(c *gin.Context) {
 func (vc *VerifyCodeController) SendUsingPhone(c *gin.Context) {
 
 	// 1. 验证表单
-	data := requests.VerifyCodePhoneRequest{}
+	request := requests.VerifyCodePhoneRequest{}
 	//Validate判断client发过来的数据是否能被解析，VerifyCodePhone验证表单是否符合认证的规则，手机和邮箱的验证规则不同
 	//1.http请求对象c，2.数据接受对象request，和handler函数VerifyCodePhone
-	if ok := requests.Validate(c, &data, requests.VerifyCodePhone); !ok {
+	if ok := requests.Validate(c, &request, requests.VerifyCodePhone); !ok {
 		return
 	}
 
 	// 2. 发送 SMS
-	if ok := verifycode.NewVerifyCode().SendSMS(data.Phone); !ok {
+	if ok := verifycode.NewVerifyCode().SendSMS(request.Phone); !ok {
 		response.Abort500(c, "发送短信失败~")
 	} else {
 		response.Success(c)
@@ -61,14 +61,14 @@ func (vc *VerifyCodeController) SendUsingEmail(c *gin.Context) {
 
 	// 1. 验证表单
 	//这里接受客户端发来的验证码和邮箱
-	data := requests.VerifyCodeEmailRequest{}
+	request := requests.VerifyCodeEmailRequest{}
 	//判断client发送来的数据是否有效
-	if ok := requests.Validate(c, &data, requests.VerifyCodeEmail); !ok {
+	if ok := requests.Validate(c, &request, requests.VerifyCodeEmail); !ok {
 		return
 	}
 
 	// 2. 发送邮件
-	err := verifycode.NewVerifyCode().SendEmail(data.Email)
+	err := verifycode.NewVerifyCode().SendEmail(request.Email)
 	if err != nil {
 		response.Abort500(c, "发送 Email 验证码失败~")
 	} else {

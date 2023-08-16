@@ -33,8 +33,8 @@ func LoginByPhone(data interface{}, c *gin.Context) map[string][]string {
 	errs := validate(data, rules, messages)
 
 	// 手机验证码
-	_data := data.(*LoginByPhoneRequest) //assertion and conversion
-	errs = validators.ValidateVerifyCode(_data.Phone, _data.VerifyCode, errs)
+	_data := data.(*LoginByPhoneRequest)                                      //assertion and conversion
+	errs = validators.ValidateVerifyCode(_data.Phone, _data.VerifyCode, errs) //验证手机验证码
 
 	return errs
 }

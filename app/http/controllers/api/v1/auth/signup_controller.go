@@ -64,7 +64,9 @@ func (sc *SignupController) SignupUsingPhone(c *gin.Context) {
 	}
 	userModel.Create()
 
+	//创建成功之后就会有ID
 	if userModel.ID > 0 {
+		//生成token
 		token := jwt.NewJWT().IssueToken(userModel.GetStringID(), userModel.Name)
 		response.CreatedJSON(c, gin.H{
 			"token": token,
